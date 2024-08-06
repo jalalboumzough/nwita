@@ -1,23 +1,26 @@
-.Add_note_div{
-    width: 500px;
-    height:250px;
-    display: flex;
-    flex-wrap: wrap;
+.Add_note_div {
+  max-width: 600px;
+  height: auto;
+  border: 1px solid black;
+  padding: 10px;
+  justify-items: center;
 }
-input,textarea{
-    border-radius: 5px;
-    border: 1px solid rgba(189, 189, 189, 0.89);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: black;
+input,
+textarea {
+  border-radius: 5px;
+  padding: 0px 20px;
+  border: 1px solid rgba(189, 189, 189, 0.89);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: black;
 }
 
-.Add_note_div input{
-    width: 500px;
-    height: 35px;
-    margin-bottom: 5px;
-    text-align: 10px;
+.Add_note_div input {
+  width: 500px;
+  height: 35px;
+  margin-bottom: 5px;
+  text-align: 10px;
 }
-textarea{
-    width: 500px;
-    height: 250px;
+textarea {
+  max-width: 500px;
+  height: 250px;
 }

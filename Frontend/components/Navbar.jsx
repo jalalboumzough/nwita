@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Navbar.css";
 import logo from "../src/img/nwita.png";
 import home from "../src/img/home.png";
@@ -7,8 +7,17 @@ import notification from "../src/img/notification.png";
 import profile from "../src/img/profile.png";
 import logout from "../src/img/Logout.png";
 import AddNote from "../components/add_notes";
+import Notes from "../components/notes";
+import { useNavigate } from "react-router-dom";
+import add from "../src/img/add_post_btn.svg";
+import search from "../src/img/search_btn.svg";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/");
+  };
+  const AddNote = () => {};
   return (
     <div className="HomePage">
       <div className="Navbar">
@@ -44,14 +53,33 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <div className="nv_Logout">
+        <div className="nv_Logout" onClick={handleClick}>
           <img src={logout} alt="" srcset="" />
           <span>Logout</span>
         </div>
       </div>
-      <div className="space"></div>
       <div className="display_content">
-        <AddNote />
+        <div className="searchBar"></div>
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes />
+      </div>
+      <div className="add_search_bt">
+        <span className="add">
+          <img src={add} alt="add note" />
+        </span>
+        <span className="search">
+          <span>
+            <input type="text" value="Search" />
+          </span>
+          <img src={search} alt="add note" />
+        </span>
       </div>
     </div>
   );

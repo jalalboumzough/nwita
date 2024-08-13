@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import "./Navbar.css";
 import logo from "../src/img/nwita.png";
-import home from "../src/img/home.png";
+import home from "../src/assets/home.svg";
 import note from "../src/img/note.png";
 import notification from "../src/img/notification.png";
 import profile from "../src/img/profile.png";
 import logout from "../src/img/Logout.png";
 import AddNote from "../components/add_notes";
-import Notes from "../components/notes";
+import Notes from "./note/notes";
 import { useNavigate } from "react-router-dom";
 import add from "../src/img/add_post_btn.svg";
 import search from "../src/img/search_btn.svg";
 
 function Navbar() {
+  const [ispang,setIspang] = useState(false)
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/");
@@ -28,26 +29,26 @@ function Navbar() {
           <ul>
             <li>
               <span className="nv_Menu_content">
-                <img src={home} alt="" />
+              <div id="home-svg"></div> 
               </span>
               <span>Home</span>
             </li>
             <li>
               {" "}
               <span className="nv_Menu_content">
-                <img src={notification} alt="" srcset="" />
+              <div id="notification-svg"></div> 
               </span>
               <span> Notification</span>
             </li>
             <li>
               <span className="nv_Menu_content">
-                <img src={note} alt="" srcset="" />
+              <div id="note-svg"></div> 
               </span>
               <span>My Note</span>
             </li>
             <li>
               <span className="nv_Menu_content">
-                <img src={profile} alt="" />
+              <div id="profile-svg"></div> 
               </span>
               <span>Profile</span>
             </li>
@@ -59,7 +60,16 @@ function Navbar() {
         </div>
       </div>
       <div className="display_content">
-        <div className="searchBar"></div>
+       <div className="searchBar"></div>
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes ispang={true}/>
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes />
+        <Notes />
         <Notes />
         <Notes />
         <Notes />

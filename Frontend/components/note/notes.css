@@ -2,8 +2,11 @@
   width: 290px;
   height: 174px;
   border-radius: 0px 0px 15px 15px;
-  margin: 10px;
+  margin: 10px 0px;
   background-color: antiquewhite;
+}
+.notes_div{
+  padding: 4px 8px;
 }
 .notes_div .Epingle_Btn {
   float: left;
@@ -16,4 +19,9 @@
   top: 0px;
   left: 260px;
   cursor: pointer;
+}
+
+.title{
+  display: flex;
+  justify-content: space-between;
 }

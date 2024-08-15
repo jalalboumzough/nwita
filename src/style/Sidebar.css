@@ -1,0 +1,90 @@
+/* Styles pour la barre latérale */
+.Sidebar {
+  width: 100px;
+  height: 100vh; /* Utilisez 100vh pour prendre toute la hauteur de la fenêtre */
+  background-color: blueviolet;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white; /* Pour assurer la lisibilité du texte */
+}
+
+.Sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Ajout d'un espace sous le logo */
+}
+
+.Sidebar-logo img {
+  width: 100px;
+  height: auto;
+}
+.Sidebar-link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start; /* Align items to the start of the flex container */
+  padding-top: 80px;
+}
+
+.Sidebar-link a {
+  margin: 10px 0;
+  color: white; /* Blanc pour contraster avec le fond blueviolet */
+  text-decoration: none; /* Suppression de la décoration du texte */
+  font-size: 15px;
+  text-align: left; /* Align the text to the left */
+  display: flex; /* Enable flexbox on the link itself */
+  align-items: center; /* Align icon and text vertically */
+}
+
+.Sidebar-link .icons {
+  margin-right: 10px; /* Space between the icon and the text */
+}
+
+
+.Sidebar-logout {
+  margin-top: auto; /* Place le bouton de déconnexion en bas */
+  width: 100%;
+  padding-bottom: 30px;
+
+}
+
+.Sidebar-logout button {
+  width: 100%;
+  padding: 10px;
+  background-color: #f3f705;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px; /* Assure une bonne lisibilité */
+  border-radius: 20px;
+}
+
+.Sidebar-logout button:hover {
+  background-color: #cfcbcb; 
+  color: black;/* Changement de couleur au survol */
+}
+
+/* Supprimer les styles redondants */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 15px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none; /* Suppression de la décoration du texte */
+  color: white; /* Blanc pour contraster avec le fond blueviolet */
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar ul li a:hover {
+  color: #ddd; /* Couleur plus claire au survol */
+}

@@ -1,0 +1,49 @@
+/* Notification.css */
+
+.Notes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .Note {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Note-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .Note-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 12px;
+  }
+  
+  .Note-title {
+    flex-grow: 1;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .Note-pin {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .Note-content {
+    font-size: 16px;
+    color: #555;
+  }
+  

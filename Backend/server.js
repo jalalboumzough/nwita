@@ -9,12 +9,6 @@ const cors = require("cors");
 app.use(express.json());
 
 // Use CORS middleware
-app.use(cors());
-app.use("/api", workRoute);
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
 
 //Routes
 

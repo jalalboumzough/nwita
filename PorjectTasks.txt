@@ -17,7 +17,7 @@ Reda:
         * Add note 
 
 
-Fonctionnalités Coté BakcEnd :
+Fonctionnalités Coté BackEnd :
 
         Jalal:
 

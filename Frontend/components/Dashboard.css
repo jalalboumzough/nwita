@@ -1,0 +1,186 @@
+.HomePage {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100vh;
+}
+
+.display_content {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0px 0px 0px 230px;
+}
+.searchBar {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(176, 176, 176);
+  margin-bottom: 20px;
+}
+/*test*/
+
+.Navbar {
+  width: 250px;
+  height: 100vh;
+  justify-content: space-around;
+  position: fixed;
+  flex-grow: 1;
+  left: 0px;
+  top: 0px;
+  border-right: solid rgb(232, 232, 232) 0.5px;
+}
+
+.nv_logo {
+  width: 100%;
+  height: 120px;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nv_logo img {
+  width: 140px;
+  height: 62px;
+  margin: 0;
+}
+
+.nv_Menu {
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin: 0;
+}
+
+.nv_Menu ul {
+  width: 100%;
+  height: auto;
+  text-decoration: none;
+  list-style: none;
+  padding: 0;
+  margin: 30px 20px;
+}
+
+.nv_Menu ul li {
+  width: 100%;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.nv_Menu ul li span:hover {
+  color: rgb(67, 67, 67);
+  font-weight: bold;
+}
+
+.nv_Menu ul li span {
+  margin: 0px 10px 0px 0px;
+}
+
+.nv_Logout {
+  width: 250px;
+  height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  cursor: pointer;
+  position: fixed;
+  bottom: 0px;
+}
+.nv_Logout:hover {
+  color: red;
+}
+.nv_Logout img {
+  width: 27px;
+  height: 28px;
+}
+/*Add notes*/
+
+.add_search_bt img {
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 5px;
+  fill: black;
+}
+.add_search_bt {
+  width: 52px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  align-items: end;
+  right: 9px;
+  bottom: 15px;
+  border-radius: 0px 0px 10px 0px;
+  background-color: rgb(255, 255, 90);
+}
+.add_search_bt span {
+  margin: 0px;
+  display: flex;
+  align-content: center;
+}
+.search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 0px 0px 10px 0px;
+  background-color: rgb(255, 255, 90);
+}
+#search_input {
+  height: 35px;
+  width: 250px;
+  border-radius: 10px;
+  border: none;
+  margin: 0px 10px 0px 10px;
+  display: none;
+}
+
+/* Addnote Popup */
+.reaction {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: end;
+}
+
+.popup-overlay {
+  background: rgba(119, 125, 3, 0.5); /* Optional: for a dimmed background */
+}
+
+.popup-content {
+  width: 700px;
+  border-radius: 10px;
+}
+
+/*
+Notification Bar
+*/
+
+.Notification_bar {
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  left: 251px;
+  top: 0px;
+  background-color: white;
+  padding-top: 10px;
+  opacity: 99%;
+  border-radius: 0px 10px;
+  display: none;
+}
+.nav-active {
+  display: flex;
+}
+.Notification_content {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  padding-left: 20px;
+  align-items: center;
+  font-size: 16px;
+}

@@ -1,0 +1,56 @@
+.Add_note_div {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  padding: 0px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.Add_note_from {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+}
+
+.Add_note_from input,
+textarea {
+  border-radius: 5px;
+  padding: 9px;
+  font-size: small;
+  font-family: Arial, Helvetica, sans-serif;
+  border: solid rgb(227, 226, 226) 0.2px;
+}
+
+.Add_note_div input {
+  width: 500px;
+  height: 35px;
+  margin-bottom: 5px;
+  text-align: 10px;
+}
+textarea {
+  width: 500px;
+  height: 250px;
+}
+
+.reaction img {
+  width: 35px;
+  height: 35px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.colorspl {
+  display: flex;
+  align-items: center;
+}
+.square {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  margin: 9px 3px;
+}

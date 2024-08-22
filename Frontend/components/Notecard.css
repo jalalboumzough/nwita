@@ -1,0 +1,26 @@
+.note-card {
+  width: 250px;
+  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: aquamarine;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.note-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.note-content {
+  font-size: 14px;
+}
+.epingler {
+  background-color: aqua;
+  position: relative;
+  left: Opx;
+}

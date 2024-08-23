@@ -30,10 +30,10 @@ export default function Profile() {
 
   return (
     <div className="Profile_Div">
-      <div className="Profile">
-        <div className="Profile_Pic" onClick={handleImageClick}>
+      <div className="UpProfile">
+        <div className="UpProfile_Pic" onClick={handleImageClick}>
           <span>
-            <img src={profilePicture} alt="Profil_pic" className="profilePic" />
+            <img src={profilePicture} alt="Profil_pic" className="UpprofilePic" />
             <input
               type="file"
               className="File_Input"

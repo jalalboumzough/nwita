@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import imageCompression from 'browser-image-compression';
+import Compressor from 'compressorjs';
+
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -15,7 +18,6 @@ export default function SignUp() {
   const fileInputRef = useRef(null);
 
   const handleImageClick = () => {
-    console.log("Image clicked");
     fileInputRef.current.click();
   };
 
@@ -31,19 +33,7 @@ export default function SignUp() {
     }
     console.log('yes that all work');
   };
-
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Form submitted");
-  };
-
-  
-
-  const AddUser = async (e) => {
-    // Adding New user to database
-    e.preventDefault();
-
+  const AddUser = async () => {
     try {
       const response = await axios.post("http://localhost:3000/api/signup", {
         FullName,
@@ -53,20 +43,16 @@ export default function SignUp() {
         ProfilePicture,
       });
 
-      // If the response indicates success (HTTP status 201)
       if (response.status === 201) {
-        // Show SweetAlert on success
         Swal.fire({
           title: "Success!",
           text: "User created successfully!",
           icon: "success",
         });
+        navigate('/');
       }
     } catch (error) {
-      // Log the error for debugging
       console.error("Error adding user:", error);
-
-      // Show SweetAlert on error
       Swal.fire({
         title: "Oops!",
         text: error.response
@@ -74,44 +60,59 @@ export default function SignUp() {
           : "Something went wrong!",
         icon: "error",
       });
-
-    }finally{
-      navigate('/');
     }
-    
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    AddUser();
   };
 
   return (
-    <div className="SignUp_Div" onSubmit={handleSubmit}>
-      <form className="SignUp_Form" onSubmit={AddUser}>
-      <div className="Profile" >
-        <div className="Profile_Pic">
-          <span>
-            <img src={PicProfile} alt="Profil_pic" className="profilePic" onClick={handleImageClick}/>
+    <div className="SignUp_Div">
+      <form className="SignUp_Form" onSubmit={handleSubmit}>
+        <div className="Profile" onClick={handleImageClick}>
+          <div className={`Profile_Pic ${ProfilePicture !== PicProfile ? '' : 'icon'}`}>
+            <img src={ProfilePicture} alt="Profile_pic" />
             <input
               type="file"
               className="File_Input"
               accept="image/*"
               ref={fileInputRef}
               onChange={handleFileChange}
-              style={{ display: "none" }} // Cache le champ input
+              style={{ display: "none" }}
             />
-          </span>
+          </div>
         </div>
-      </div>
-        <input type="text" placeholder="FullName"         
-        value={FullName}
-          onChange={(e) => setFullName(e.target.value)} />
-        <input type="text" placeholder="Username"           
-        value={UserName}
-          onChange={(e) => setUserName(e.target.value)}/>
-        <input type="text" placeholder="Email" 
-        value={Email}
-        onChange={(e) => setUserEmail(e.target.value)}/>
-        <input type="password" placeholder="Password" value={Password}
-        onChange={(e) => setUserPassword(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={FullName}
+          onChange={(e) => setFullName(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Username"
+          value={UserName}
+          onChange={(e) => setUserName(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={Email}
+          onChange={(e) => setUserEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={Password}
+          onChange={(e) => setUserPassword(e.target.value)}
+          required
+        />
         <button type="submit" className="SignUp_Bt">
-          SignUp
+          Sign Up
         </button>
       </form>
     </div>

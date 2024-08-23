@@ -4,10 +4,10 @@ const bcrypt = require("bcrypt");
 
 //insert UserSingUp
 const SingUp = async (req, res) => {
-  const { FullName, UserName, Email, Password } = req.body;
+  const { FullName, UserName, Email, Password, ProfilePicture } = req.body;
   console.log(req.body);
   // Validate input
-  if (!FullName || !UserName || !Email || !Password) {
+  if (!FullName || !UserName || !Email || !Password || !ProfilePicture) {
     return res
       .status(400)
       .json({ error: "UserName, Email, and Password are required" });
@@ -23,6 +23,7 @@ const SingUp = async (req, res) => {
       UserName,
       Email,
       Password,
+      ProfilePicture: `data:${image.contentType};base64,${image.data}`, // Save as full Base64 string
     });
     res.status(201).json({ newUser });
   } catch (error) {

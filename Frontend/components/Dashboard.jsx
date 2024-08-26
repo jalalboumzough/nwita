@@ -62,7 +62,7 @@ function Dashboard() {
         </span>
         <div className="nv_Menu">
           <ul>
-            <li onClick={(e) => handleHome("home")}>
+            <li onClick={() => handleHome("home")}>
               <span className="nv_Menu_content">
                 <img src={home} alt="Home" />
               </span>
@@ -74,13 +74,13 @@ function Dashboard() {
               </span>
               <span>Notification</span>
             </li>
-            <li onClick={(e) => handleHome("notif")}>
+            <li onClick={() => handleHome("notif")}>
               <span className="nv_Menu_content">
                 <img src={note} alt="My Note" />
               </span>
               <span>My Note</span>
             </li>
-            <li onClick={(e) => handleHome("profile")}>
+            <li onClick={() => handleHome("profile")}>
               <span className="nv_Menu_content">
                 <img src={profile} alt="Profile" />
               </span>
@@ -95,7 +95,8 @@ function Dashboard() {
       </div>
       <div ref={navLinksRef} className="Notification_bar">
         <div className="Notification_content">
-          <span>Nouveau note du sara</span>
+          <span>Nouveau note du Reda Argane</span>
+          <span>Nouveau note du said</span>
         </div>
       </div>
       <div className="display_content">
@@ -112,7 +113,6 @@ function Dashboard() {
           <Popup
             trigger={<img src={add} alt="Add Note" />}
             modal
-            closeOnDocumentClick
           >
             <AddNote />
           </Popup>

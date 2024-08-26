@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import imageCompression from 'browser-image-compression';
-import Compressor from 'compressorjs';
 
 
 export default function SignUp() {
@@ -62,14 +60,10 @@ export default function SignUp() {
       });
     }
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    AddUser();
-  };
 
   return (
     <div className="SignUp_Div">
-      <form className="SignUp_Form" onSubmit={handleSubmit}>
+      <form className="SignUp_Form" onSubmit={AddUser}>
         <div className="Profile" onClick={handleImageClick}>
           <div className={`Profile_Pic ${ProfilePicture !== PicProfile ? '' : 'icon'}`}>
             <img src={ProfilePicture} alt="Profile_pic" />

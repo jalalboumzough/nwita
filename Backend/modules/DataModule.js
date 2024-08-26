@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 
 const Schema = mongoose.Schema;
 
+/* Define the User Schema */
 const UserSchema = new Schema({
   FullName: {
     type: String,
@@ -25,15 +26,42 @@ const UserSchema = new Schema({
     required: true,
   },
   ProfilePicture: {
-    data: Buffer,
-    contentType: String,
+    type: String,
   },
 });
 
+// Hash the password before saving
 UserSchema.pre("save", async function (next) {
-  this.Password = await bcrypt.hash(this.Password, 10);
-
+  if (this.isModified("Password") || this.isNew) {
+    this.Password = await bcrypt.hash(this.Password, 10);
+  }
   next();
 });
 
-module.exports = mongoose.model("User", UserSchema);
+/* Define the Note Schema */
+const NoteSchema = new Schema({
+  NoteTitle: {
+    type: String,
+    required: true,
+  },
+  NoteObject: {
+    type: String,
+    required: true,
+  },
+  NoteContent: {
+    type: String,
+    required: true,
+  },
+  NoteBgColor: {
+    type: String,
+    required: true,
+  },
+});
+
+const UserModule = mongoose.model("User", UserSchema);
+const NotesModule = mongoose.model("Notes", NoteSchema);
+
+module.exports = {
+  UserModule,
+  NotesModule,
+};

@@ -1,6 +1,5 @@
-const UserModule = require("../Modules/DataModule");
+const { UserModule, NotesModule } = require("../Modules/DataModule");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 
 //insert UserSingUp
 const SingUp = async (req, res) => {
@@ -23,7 +22,7 @@ const SingUp = async (req, res) => {
       UserName,
       Email,
       Password,
-      ProfilePicture: `data:${image.contentType};base64,${image.data}`, // Save as full Base64 string
+      ProfilePicture: `data:${ProfilePicture.contentType};base64,${ProfilePicture.data}`, // Save as full Base64 string
     });
     res.status(201).json({ newUser });
   } catch (error) {
@@ -32,6 +31,27 @@ const SingUp = async (req, res) => {
   }
 };
 
+const Addnote = async (req, res) => {
+  const NewNote = ({ NoteTitle, NoteObject, NoteContent, NoteBgColor } = req.body);
+    console.log(req.body);
+  // Validate input
+  if (!NoteTitle || !NoteObject || !NoteContent) {
+    return res.status(400).json({ error: "The note is note adding " });
+  }
+  try {
+    const NewNote = await NotesModule.create({
+      NoteTitle,
+      NoteObject,
+      NoteContent,
+      NoteBgColor,
+    });
+    res.status(201).json({ NewNote });
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
+};
+
 module.exports = {
   SingUp,
+  Addnote,
 };

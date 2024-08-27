@@ -15,16 +15,19 @@
 .UpProfile_Pic {
   width: 130px;
   height: 130px;
-  background-color: #ffffff;
   border: solid 1px rgb(224, 224, 224);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative; 
 }
 .UpProfile_Pic img {
-  max-width: 40px; /* Ajustez la taille de l'image selon vos besoins */
-  max-height: 40px; /* Assurez-vous que l'image ne dépasse pas le cercle */
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  object-fit:cover;
+  image-rendering: auto;
 }
 .File_Input {
   display: none;
@@ -46,11 +49,15 @@
   padding-left: 19px;
 }
 .Profile_Form button {
-  width: 250px;
+  width: 300px;
   height: 42px;
   border-radius: 10px;
   cursor: pointer;
   margin: 10px;
-  background-color: #ffe500;
+  background-color: #08ce02;
   border: none;
+}
+.Profile_Pic.icon img {
+  max-width: 40px;
+  max-height: 40px;
 }

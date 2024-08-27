@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import "./profile.css";
 import PicProfile from "../src/img/PicProfil.png";
+import axios from 'axios';
 
 export default function Profile() {
   const [profilePicture, setProfilePicture] = useState(PicProfile);
@@ -28,12 +29,25 @@ export default function Profile() {
     console.log("Form submitted");
   };
 
+  const [User, setUser] = useState([]); // Initialize as an empty array
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/User');
+        setUser(response.data); // Use response.data directly
+      } catch (error) {
+        console.error("Error fetching notes:", error); // Correct the error message
+      }
+    };
+    fetchNotes();
+  }, []);
+
   return (
     <div className="Profile_Div">
       <div className="UpProfile">
-        <div className="UpProfile_Pic" onClick={handleImageClick}>
-          <span>
-            <img src={profilePicture} alt="Profil_pic" className="UpprofilePic" />
+          <div className="UpProfile_Pic">
+            <img src={User.ProfilePicture} alt="Pic Profile" className="UpprofilePic" />
             <input
               type="file"
               className="File_Input"
@@ -42,16 +56,14 @@ export default function Profile() {
               onChange={handleFileChange}
               style={{ display: "none" }} // Cache le champ input
             />
-          </span>
-        </div>
+      </div>
       </div>
       <form className="Profile_Form" onSubmit={handleSubmit}>
-        <input type="text" placeholder="FullName" />
-        <input type="text" placeholder="Username" />
-        <input type="text" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+        <input type="text" placeholder="FullName" value={User.FullName} />
+        <input type="text" placeholder="UserName" value={User.UserName} />
+        <input type="text" placeholder="Email" value={User.Email} />
         <button type="submit" className="Profile_Bt">
-          SignUp
+          Save Change
         </button>
       </form>
     </div>

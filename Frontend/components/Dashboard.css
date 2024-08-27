@@ -8,9 +8,9 @@
 .display_content {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  margin: 0px 0px 0px 230px;
+  flex-wrap: wrap;
+  margin: 0px 0px 0px 240px;
 }
 .searchBar {
   width: 100%;

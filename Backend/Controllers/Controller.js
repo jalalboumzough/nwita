@@ -22,7 +22,7 @@ const SingUp = async (req, res) => {
       UserName,
       Email,
       Password,
-      ProfilePicture: `data:${ProfilePicture.contentType};base64,${ProfilePicture.data}`, // Save as full Base64 string
+      ProfilePicture: ProfilePicture.data,
     });
     res.status(201).json({ newUser });
   } catch (error) {
@@ -31,10 +31,11 @@ const SingUp = async (req, res) => {
   }
 };
 
+/* Ajouter des  notes controller */
 const Addnote = async (req, res) => {
-  const NewNote = ({ NoteTitle, NoteObject, NoteContent, NoteBgColor } = req.body);
-    console.log(req.body);
-  // Validate input
+  const NewNote = ({ NoteTitle, NoteObject, NoteContent, NoteBgColor } =
+    req.body);
+  console.log(req.body);
   if (!NoteTitle || !NoteObject || !NoteContent) {
     return res.status(400).json({ error: "The note is note adding " });
   }
@@ -51,7 +52,31 @@ const Addnote = async (req, res) => {
   }
 };
 
+/*Recuper tous les notes */
+
+const AllNotes = async (req, res) => {
+  try {
+    const Notes = await NotesModule.find();
+    res.json(Notes);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+/*Update User*/
+
+const GetUser = async (req, res) => {
+  try {
+    const Users = await UserModule.findById("66cdd6bae1faa7747e67cf16");
+    res.json(Users);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 module.exports = {
   SingUp,
   Addnote,
+  AllNotes,
+  GetUser,
 };

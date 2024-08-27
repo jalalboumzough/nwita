@@ -14,6 +14,7 @@ export default function SignUp() {
   const [Email, setUserEmail] = useState('');
   const [Password, setUserPassword] = useState('');
   const fileInputRef = useRef(null);
+  const [file,setFile]=useState('');
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -21,6 +22,7 @@ export default function SignUp() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setFile(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -38,7 +40,10 @@ export default function SignUp() {
         UserName,
         Email,
         Password,
-        ProfilePicture,
+        ProfilePicture:{
+          data: ProfilePicture,
+          contentType: file.type,
+        },
       });
 
       if (response.status === 201) {

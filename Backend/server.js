@@ -8,7 +8,7 @@ const cors = require("cors");
 //middleware
 app.use(express.json());
 // Use CORS middleware
-app.use(cors());
+app.use(cors("http://localhost:3000"));
 app.use("/api", workRoute);
 app.use((req, res, next) => {
   cl;

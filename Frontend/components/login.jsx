@@ -10,23 +10,29 @@ import Swal from "sweetalert2";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const [token,setAuthToken]=useState(null);
   const [userName, SetUserName] = useState("");
   const [password, SetUserPassword] = useState("");
 
   const handleClick = () => {
     navigate("/signup"); // Navigate to the specified path
   };
+  const loginPayload ={
+     userName,
+     password,
+  }
 
   const handleClickLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/login", {
-        userName,
-        password,
-      });
+      const response = await axios.post("http://localhost:3000/api/login",loginPayload);
 
       // Check the response data, assuming it returns a boolean
       if (response.status === 200) {
+        const token  =  response.data.token;
+        localStorage.setItem("token", token);
+        setAuthToken(token);
+
         Swal.fire({
           title: "Success!",
           text: "User and password are correct.",

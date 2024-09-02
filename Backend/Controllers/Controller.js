@@ -1,6 +1,23 @@
 const { UserModule, NotesModule } = require("../Modules/DataModule");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
+//JWT Verification
+
+const jwtAthu = (req, res, next) => {
+  console.log(req.body);
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "error " });
+  }
+  const Validate = jwt.verify(token, process.env.JWT_KEY);
+  if (!Validate) {
+    return res.status(401).json({ error: "error " });
+  }
+  const user = jwt.decode(token, true);
+  req.user = user;
+  next();
+};
 //insert UserSingUp
 const SingUp = async (req, res) => {
   const { FullName, UserName, Email, Password, ProfilePicture } = req.body;
@@ -66,12 +83,35 @@ const AllNotes = async (req, res) => {
 /*Update User*/
 
 const GetUser = async (req, res) => {
+  const userID = req.user.userId;
   try {
-    const Users = await UserModule.findById("66cdd6bae1faa7747e67cf16");
+    const Users = await UserModule.findById(userID);
     res.json(Users);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
+};
+const UpdateProfile = async (req, res) => {
+  try {
+    const { FullName, UserName, ProfilePicture } = req.body;
+    const userId = req.user.userId;
+    const user = await UserModule.findById(userId);
+    if (!user) {
+      return res.status(400).json({ message: "error" });
+    }
+    if (ProfilePicture) {
+      user.ProfilePicture = ProfilePicture;
+    }
+    if (FullName) {
+      user.FullName = FullName;
+    }
+    if (UserName) {
+      user.UserName = UserName;
+    }
+
+    user.save();
+    return res.status(200).json({ message: "success" });
+  } catch {}
 };
 
 module.exports = {
@@ -79,4 +119,6 @@ module.exports = {
   Addnote,
   AllNotes,
   GetUser,
+  UpdateProfile,
+  jwtAthu,
 };

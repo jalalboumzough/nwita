@@ -1,17 +1,21 @@
 import React, { useState, useRef,useEffect } from "react";
 import "./profile.css";
-import PicProfile from "../src/img/PicProfil.png";
 import axios from 'axios';
 
 export default function Profile() {
-  const [profilePicture, setProfilePicture] = useState(PicProfile);
+  const [ProfilePicture, setProfilePicture] = useState(null);
+  const [UserFullName,setUserFullName]=useState(null);
+  const [UserName,setUserName]=useState("");
   const fileInputRef = useRef(null);
+  const token =localStorage.getItem('token');
+  const [User, setUser] = useState([]);
+
+
 
   const handleImageClick = () => {
-    console.log("Image clicked"); // Ajoute ceci pour voir si le clic est détecté
-    fileInputRef.current.click(); // Ouvre le sélecteur de fichiers
+    fileInputRef.current.click();
   };
-
+  
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -21,21 +25,47 @@ export default function Profile() {
       };
       reader.readAsDataURL(file); // Lis le fichier sélectionné comme URL de données
     }
+    console.log(ProfilePicture);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Empêche la soumission par défaut du formulaire
-    // Ajoute ici la logique pour sauvegarder les changements
-    console.log("Form submitted");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    try {
+      const response = await axios.post('http://localhost:3000/api/UpdateProfile', {      
+          FullName:UserFullName,
+          UserName,
+          ProfilePicture
+      },
+      {headers: {
+        Authorization: `Bearer ${token}` 
+      },}
+    );
+      if(response.status===200){
+        console.log('YES ')
+      }else{
+        console.log('NO ')
+      }
+    } catch (error) {
+      console.error("Error fetching notes:", error); // Correct the error message
+    }
+
   };
 
-  const [User, setUser] = useState([]); // Initialize as an empty array
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/User');
-        setUser(response.data); // Use response.data directly
+        const response = await axios.get('http://localhost:3000/api/User', {
+          headers: {
+            Authorization: `Bearer ${token}` 
+          }
+        });
+        const user =response.data;
+        setProfilePicture(user.ProfilePicture);
+        setUserFullName(user.FullName);
+        setUserName(user.UserName);
+         // Use response.data directly
       } catch (error) {
         console.error("Error fetching notes:", error); // Correct the error message
       }
@@ -45,9 +75,11 @@ export default function Profile() {
 
   return (
     <div className="Profile_Div">
+
+      <form className="Profile_Form" onSubmit={handleSubmit}>
       <div className="UpProfile">
-          <div className="UpProfile_Pic">
-            <img src={User.ProfilePicture} alt="Pic Profile" className="UpprofilePic" />
+          <div className="UpProfile_Pic" onClick={handleImageClick}>
+            <img src={ProfilePicture} alt="Pic Profile" className="UpprofilePic" />
             <input
               type="file"
               className="File_Input"
@@ -58,10 +90,8 @@ export default function Profile() {
             />
       </div>
       </div>
-      <form className="Profile_Form" onSubmit={handleSubmit}>
-        <input type="text" placeholder="FullName" value={User.FullName} />
-        <input type="text" placeholder="UserName" value={User.UserName} />
-        <input type="text" placeholder="Email" value={User.Email} />
+        <input type="text" placeholder="FullName" value={UserFullName} onChange={(e)=>setUserFullName(e.target.value)}/>
+        <input type="text" placeholder="UserName" value={UserName} onChange={(e)=>setUserName(e.target.value)} />
         <button type="submit" className="Profile_Bt">
           Save Change
         </button>

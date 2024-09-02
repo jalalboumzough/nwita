@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const [ProfilePicture, setProfilePicture] = useState(PicProfile);
+  const [ProfilePicture, setProfilePicture] = useState();
   const [FullName, setFullName] = useState('');
   const [UserName, setUserName] = useState('');
   const [Email, setUserEmail] = useState('');
@@ -20,22 +20,25 @@ export default function SignUp() {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async(event) => {
     const file = event.target.files[0];
+    console.log('yes that  : ',file);
     setFile(file);
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend =  () => {
         // Convert the file to Base64 string
         setProfilePicture(reader.result);
+        
       };
       reader.readAsDataURL(file); // Read the file as a data URL
     }
-    console.log('yes that all work');
+    console.log('yes that all work : ',ProfilePicture);
   };
   const AddUser = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/signup", {
+      console.log('this photo : ',ProfilePicture)
+      /*const response = await axios.post("http://localhost:3000/api/signup", {
         FullName,
         UserName,
         Email,
@@ -53,7 +56,7 @@ export default function SignUp() {
           icon: "success",
         });
         navigate('/');
-      }
+      } */
     } catch (error) {
       console.error("Error adding user:", error);
       Swal.fire({
@@ -68,7 +71,7 @@ export default function SignUp() {
 
   return (
     <div className="SignUp_Div">
-      <form className="SignUp_Form" onSubmit={AddUser}>
+      <form className="SignUp_Form" >
         <div className="Profile" onClick={handleImageClick}>
           <div className={`Profile_Pic ${ProfilePicture !== PicProfile ? '' : 'icon'}`}>
             <img src={ProfilePicture} alt="Profile_pic" />
@@ -110,7 +113,7 @@ export default function SignUp() {
           onChange={(e) => setUserPassword(e.target.value)}
           required
         />
-        <button type="submit" className="SignUp_Bt">
+        <button type="" onClick={AddUser} className="SignUp_Bt">
           Sign Up
         </button>
       </form>

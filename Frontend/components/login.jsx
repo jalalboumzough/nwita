@@ -11,26 +11,28 @@ import Swal from "sweetalert2";
 function LoginForm() {
   const navigate = useNavigate();
   const [token,setAuthToken]=useState(null);
-  const [userName, SetUserName] = useState("");
-  const [password, SetUserPassword] = useState("");
+  const [UserName, SetUserName] = useState("");
+  const [Password, SetUserPassword] = useState("");
 
   const handleClick = () => {
     navigate("/signup"); // Navigate to the specified path
   };
-  const loginPayload ={
-     userName,
-     password,
-  }
 
   const handleClickLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/login",loginPayload);
+      const response = await axios.post("http://localhost:3000/api/login",{
+        UserName,
+        Password,
+      });
 
       // Check the response data, assuming it returns a boolean
       if (response.status === 200) {
+        console.log(response.data);
         const token  =  response.data.token;
+        const userpic=response.data.userpic;
         localStorage.setItem("token", token);
+        localStorage.setItem("userpic", userpic);
         setAuthToken(token);
 
         Swal.fire({

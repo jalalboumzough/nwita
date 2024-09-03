@@ -32,7 +32,7 @@ function Dashboard() {
   useEffect(() => {
     const handleNotificationClick = () => {
       if (navLinksRef.current) {
-        navLinksRef.current.classList.toggle("nav-active");
+        // navLinksRef.current.classList.toggle("nav-active");
       }
     };
 

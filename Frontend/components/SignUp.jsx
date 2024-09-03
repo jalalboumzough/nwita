@@ -34,7 +34,6 @@ export default function SignUp() {
   const AddUser = async (e) => {
     e.preventDefault();
     try {
-      console.log("this photo : ", ProfilePicture);
       const response = await axios.post("http://localhost:3000/api/signup", {
         FullName,
         UserName,
@@ -47,12 +46,13 @@ export default function SignUp() {
       });
 
       if (response.status === 201) {
-        Swal.fire({
+
+        await Swal.fire({
           title: "Success!",
           text: "User created successfully!",
           icon: "success",
         });
-        navigate("/login");
+        navigate("/");
       }
     } catch (error) {
       Swal.fire({

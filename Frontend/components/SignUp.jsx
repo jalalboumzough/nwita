@@ -5,45 +5,42 @@ import { useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-
 export default function SignUp() {
   const navigate = useNavigate();
   const [ProfilePicture, setProfilePicture] = useState();
-  const [FullName, setFullName] = useState('');
-  const [UserName, setUserName] = useState('');
-  const [Email, setUserEmail] = useState('');
-  const [Password, setUserPassword] = useState('');
+  const [FullName, setFullName] = useState("");
+  const [UserName, setUserName] = useState("");
+  const [Email, setUserEmail] = useState("");
+  const [Password, setUserPassword] = useState("");
   const fileInputRef = useRef(null);
-  const [file,setFile]=useState('');
+  const [file, setFile] = useState("");
 
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = async(event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    console.log('yes that  : ',file);
     setFile(file);
     if (file) {
       const reader = new FileReader();
-      reader.onloadend =  () => {
+      reader.onloadend = () => {
         // Convert the file to Base64 string
         setProfilePicture(reader.result);
-        
       };
       reader.readAsDataURL(file); // Read the file as a data URL
     }
-    console.log('yes that all work : ',ProfilePicture);
   };
-  const AddUser = async () => {
+  const AddUser = async (e) => {
+    e.preventDefault();
     try {
-      console.log('this photo : ',ProfilePicture)
-      /*const response = await axios.post("http://localhost:3000/api/signup", {
+      console.log("this photo : ", ProfilePicture);
+      const response = await axios.post("http://localhost:3000/api/signup", {
         FullName,
         UserName,
         Email,
         Password,
-        ProfilePicture:{
+        ProfilePicture: {
           data: ProfilePicture,
           contentType: file.type,
         },
@@ -55,10 +52,9 @@ export default function SignUp() {
           text: "User created successfully!",
           icon: "success",
         });
-        navigate('/');
-      } */
+        navigate("/login");
+      }
     } catch (error) {
-      console.error("Error adding user:", error);
       Swal.fire({
         title: "Oops!",
         text: error.response
@@ -71,9 +67,13 @@ export default function SignUp() {
 
   return (
     <div className="SignUp_Div">
-      <form className="SignUp_Form" >
+      <form className="SignUp_Form">
         <div className="Profile" onClick={handleImageClick}>
-          <div className={`Profile_Pic ${ProfilePicture !== PicProfile ? '' : 'icon'}`}>
+          <div
+            className={`Profile_Pic ${
+              ProfilePicture !== PicProfile ? "" : "icon"
+            }`}
+          >
             <img src={ProfilePicture} alt="Profile_pic" />
             <input
               type="file"

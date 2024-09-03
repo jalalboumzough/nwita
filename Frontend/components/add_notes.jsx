@@ -9,120 +9,161 @@ import share from "../src/img/share.svg";
 
 export default function AddNotes() {
   /* Add Note State */
-  const [NoteTitle,setNoteTitle]=useState('');
-  const [NoteObject,setNoteObject]=useState('');
-  const [NoteContent,setNoteContent]=useState('');
+  const [NoteTitle, setNoteTitle] = useState("");
+  const [NoteObject, setNoteObject] = useState("");
+  const [NoteContent, setNoteContent] = useState("");
   const [NoteBgColor, setNoteBgColor] = useState("");
+  const [isFormVisible, setIsFormVisible] = useState(true); // State to control form visibility
 
-  /*Reda Argan : UseState du changement du color et functionalité  */
-
+  /*Reda Argan : UseState du changement du color et fonctionnalité */
   const [colors, setColors] = useState({
     red: "#fb9c88",
     blue: "#88bbfb",
     green: "#bcfb88",
+    orange: "#FFA500",
   });
-  
+
   const Add_note_div = useRef();
   const div1 = useRef();
   const div2 = useRef();
   const div3 = useRef();
-  
+  const div4 = useRef();
+
   const UpdateColor = (a) => {
-    console.log(div1.current);
-    if (a == 1) {
-      div1.current.style.border = "1px";
+    if (a === 1) {
+      div1.current.style.border = "2px";
       div1.current.style.borderStyle = "solid";
       div1.current.style.borderColor = "#635959";
       div2.current.style.borderColor = "white";
       div3.current.style.borderColor = "white";
-      Add_note_div.current.style.backgroundColor = "#fb9c88";
+      div4.current.style.borderColor = "white";
       setNoteBgColor(colors.red);
-    } else if (a == 2) {
+    } else if (a === 2) {
       div1.current.style.borderColor = "white";
-      div2.current.style.border = "1px";
+      div2.current.style.border = "2px";
       div2.current.style.borderStyle = "solid";
       div2.current.style.borderColor = "#635959";
       div3.current.style.borderColor = "white";
-      Add_note_div.current.style.backgroundColor = "#88bbfb";
+      div4.current.style.borderColor = "white";
       setNoteBgColor(colors.blue);
-    } else if (a == 3) {
+    } else if (a === 3) {
       div1.current.style.borderColor = "white";
       div2.current.style.borderColor = "white";
-      div3.current.style.border = "1px";
+      div3.current.style.border = "2px";
       div3.current.style.borderStyle = "solid";
       div3.current.style.borderColor = "#635959";
-      Add_note_div.current.style.backgroundColor = "#bcfb88";
-      Add_note_div.current.style.borderStyle ="none";
+      div4.current.style.borderColor = "white";
       setNoteBgColor(colors.green);
+    } else if (a === 4) {
+      div1.current.style.borderColor = "white";
+      div2.current.style.borderColor = "white";
+      div3.current.style.borderColor = "white";
+      div4.current.style.border = "2px";
+      div4.current.style.borderStyle = "solid";
+      div4.current.style.borderColor = "#635959";
+      setNoteBgColor(colors.orange);
     }
-  console.log(NoteBgColor);
-  }
-  const Save= async (e)=>{
-    e.preventDefault();
+  };
+
+  const Save = async () => {
     try {
-      const response=await axios.post("http://localhost:3000/api/Addnote",{
+      const response = await axios.post("http://localhost:3000/api/Addnote", {
         NoteTitle,
         NoteObject,
         NoteContent,
-        NoteBgColor,});
-        if(response.status===201){
-          Swal.fire({
-            title: "Success!",
-            text: "The note is adding ",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1000,
-          });
-        }else if( response===400){
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "The note is note adding",
-            footer: '<a href="#">Why do I have this issue?</a>',
-          });
-        }}catch(error){
-          console.error("Opps",error);
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Something went wrong. Please try again later.",
-          })
-        }
+        NoteBgColor,
+      });
+      if (response.status === 201) {
+        Swal.fire({
+          title: "Success!",
+          text: "The note is added successfully.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        // Hide the form after successful save
+        setIsFormVisible(false);
+      } else if (response.status === 400) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "The note could not be added.",
+        });
       }
+    } catch (error) {
+      console.error("Oops", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong. Please try again later.",
+      });
+    }
+  };
+
+  const handleClose = () => {
+    setIsFormVisible(false); // Hide the form
+  };
+
   return (
-    <div ref={Add_note_div} className="Add_note_div" style={{ backgroundColor: NoteBgColor }}>
-<from className="Add_note_from">
-        <input type="text" placeholder="Note title"
-        onChange={(e)=>setNoteTitle(e.target.value)}
-        ></input>
-        <input type="text" placeholder="Object" onChange={(e)=>setNoteObject(e.target.value)}></input>
-        <textarea name="" placeholder="Content" onChange={(e)=>setNoteContent(e.target.value)} ></textarea>
-        <div className="colorspl">
-          <div
-            ref={div1}
-            onClick={() => UpdateColor(1)}
-            className="square"
-            style={{ backgroundColor: colors.red }}
-          ></div>
-          <div
-            ref={div2}
-            onClick={() => UpdateColor(2)}
-            className="square"
-            style={{ backgroundColor: colors.blue }}
-          ></div>
-          <div
-            ref={div3}
-            onClick={() => UpdateColor(3)}
-            className="square"
-            style={{ backgroundColor: colors.green }}
-          ></div>
+    <div className="AddNote">
+      {isFormVisible && (
+        <div ref={Add_note_div} className="Add_note_div">
+          <div className="closebt">
+            <img
+              src={close}
+              alt="close"
+              className="close"
+              onClick={handleClose} // Handle close button click
+            />
+          </div>
+          <form className="Add_note_from">
+            <input
+              type="text"
+              placeholder="Note title"
+              onChange={(e) => setNoteTitle(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Object"
+              onChange={(e) => setNoteObject(e.target.value)}
+            />
+            <textarea
+              placeholder="Content"
+              onChange={(e) => setNoteContent(e.target.value)}
+            ></textarea>
+            <div className="colorspl">
+              <div
+                ref={div1}
+                onClick={() => UpdateColor(1)}
+                className="square"
+                style={{ backgroundColor: colors.red }}
+              ></div>
+              <div
+                ref={div2}
+                onClick={() => UpdateColor(2)}
+                className="square"
+                style={{ backgroundColor: colors.blue }}
+              ></div>
+              <div
+                ref={div3}
+                onClick={() => UpdateColor(3)}
+                className="square"
+                style={{ backgroundColor: colors.green }}
+              ></div>
+              <div
+                ref={div4}
+                onClick={() => UpdateColor(4)}
+                className="square"
+                style={{ backgroundColor: colors.orange }}
+              ></div>
+            </div>
+            <div className="reaction">
+              <img src={save} alt="save" className="save" onClick={Save} />
+              <img src={share} alt="share" className="share" />
+            </div>
+          </form>
         </div>
-        <div className="reaction">
-          <img src={save} alt="save" className="save" onClick={Save} />
-          <img src={close} alt="close" className="close" />
-          <img src={share} alt="share" className="share" />
-        </div>
-      </from>
+      )}
     </div>
   );
 }

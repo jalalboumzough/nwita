@@ -132,13 +132,19 @@
   border-radius: 0px 0px 10px 0px;
   background-color: rgb(255, 255, 90);
 }
-#search_input {
+.search_input {
   height: 35px;
   width: 250px;
   border-radius: 10px;
-  border: none;
-  margin: 0px 10px 0px 10px;
-  display: none;
+  border: 1px solid #ccc; /* Light grey border */
+  padding: 0 10px; /* Space inside the input */
+  margin: 0px 10px; /* Space around the input */
+  display: none; /* Ensure it is visible and displayed inline */
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.search.show .search_input {
+  display: inline-block; /* Show when parent has .show class */
 }
 
 /* Addnote Popup */
@@ -172,6 +178,7 @@ Notification Bar
   opacity: 99%;
   border-radius: 0px 10px;
   display: none;
+  transform: translateX(-100%);
 }
 .nav-active {
   display: flex;

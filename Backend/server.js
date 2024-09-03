@@ -4,19 +4,22 @@ const workRoute = require("./routes/workRoute");
 const db = require("mongoose");
 const app = express();
 const cors = require("cors");
-const bodyParser = require("body-parser");
 
 //middleware
 app.use(express.json());
-// Use CORS middleware
-app.use(cors("http://localhost:5173/"));
+// Use cors middleware
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow requests from this origin
+  })
+);
 app.use("/api", workRoute);
 
 //erro
 
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-//
+// Increase payload size limits
+app.use(express.json({ limit: "1000mb" })); //
+app.use(express.urlencoded({ limit: "1000mb", extended: true }));
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();

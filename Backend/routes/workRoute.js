@@ -8,6 +8,7 @@ const {
   GetUser,
   jwtAthu,
   UpdateProfile,
+  AllUsers,
 } = require("../Controllers/Controller.js");
 const { login } = require("../Controllers/AthuController.js");
 
@@ -17,6 +18,7 @@ router.post("/Addnote", Addnote);
 
 router.get("/AllNotes", AllNotes);
 router.get("/User", jwtAthu, GetUser);
-router.post("/UpdateProfile",jwtAthu, UpdateProfile);
+router.get("/Users", AllUsers);
+router.post("/UpdateProfile", jwtAthu, UpdateProfile);
 
 module.exports = router;

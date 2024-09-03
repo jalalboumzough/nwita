@@ -1,7 +1,7 @@
 import "./SignUp.css";
 import PicProfile from "../src/img/PicProfil.png";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef} from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 

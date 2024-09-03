@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -14,6 +14,11 @@ export default function AddNotes() {
   const [NoteContent, setNoteContent] = useState("");
   const [NoteBgColor, setNoteBgColor] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(true); // State to control form visibility
+
+  const [email, setEmail] = useState("");
+  const [emailSuggestions, setEmailSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [error, setError] = useState(null);
 
   /*Reda Argan : UseState du changement du color et fonctionnalité */
   const [colors, setColors] = useState({
@@ -65,6 +70,27 @@ export default function AddNotes() {
     }
   };
 
+  useEffect(() => {
+    const fetchEmails = async () => {
+      if (email && email.length > 0) {
+        try {
+          const response = await axios.post("http://localhost:3000/api/Users");
+          
+          // Assuming the API response is an array of user objects with an Email field
+          const suggestions = response.data.map(user => user.Email);
+          setEmailSuggestions(suggestions);
+
+        } catch (error) {
+          setError("Error fetching email suggestions.");
+          console.error("Error fetching emails:", error);
+        }
+      } else {
+        setEmailSuggestions([]);
+      }
+    };
+
+    fetchEmails();
+  }, [email]);
   const Save = async () => {
     try {
       const response = await axios.post("http://localhost:3000/api/Addnote", {
@@ -100,8 +126,27 @@ export default function AddNotes() {
     }
   };
 
+
+
+  const handleShare = () => {
+    if (!email) {
+      Swal.fire({
+        icon: "warning",
+        title: "Missing Email",
+        text: "Please enter an email address to share the note.",
+      });
+      return;
+    }
+    Swal.fire({
+      title: "Share Note",
+      text: `The note will be shared with ${email}.`,
+      icon: "info",
+      confirmButtonText: "OK",
+    });
+  };
+
   const handleClose = () => {
-    setIsFormVisible(false); // Hide the form
+    setIsFormVisible(false);
   };
 
   return (
@@ -159,8 +204,33 @@ export default function AddNotes() {
             </div>
             <div className="reaction">
               <img src={save} alt="save" className="save" onClick={Save} />
-              <img src={share} alt="share" className="share" />
+              <img src={share} alt="share" className="share" onClick={handleShare}/>
             </div>
+            <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => {
+          setEmail(e.target.value);
+          setShowSuggestions(true);
+        }}
+        onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+      />
+      {showSuggestions && emailSuggestions.length > 0 && (
+        <ul className="email-suggestions">
+          {emailSuggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              onClick={() => {
+                setEmail(suggestion);
+                setShowSuggestions(false);
+              }}
+            >
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      )}
           </form>
         </div>
       )}

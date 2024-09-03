@@ -2,25 +2,30 @@ require("dotenv").config();
 const { UserModule } = require("../Modules/DataModule");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 const login = async (req, res) => {
-  const { userName, password } = req.body;
-  const user = await UserModule.findOne({ UserName: userName });
+  const { UserName, Password } = req.body;
+  const user = await UserModule.findOne({ UserName });
+  console.log(user.Password);
 
   try {
     // en verifier que l'utilisateur exist
     !user && res.status(401).json({ error: "user or password not correct " });
 
     //en verifier que le password est correct
-    const isPasswordValid = await bcrypt.compare(password, user.Password);
-    console.log(isPasswordValid);
+    const isPasswordValid = await bcrypt.compare(Password, user.Password);
     //en cas de password invalid
     if (!isPasswordValid) {
       res.status(401).json({ error: "user or password not correct" });
     } else {
+      const userpic = user.ProfilePicture;
       //en cas de du password an user et exist en database
       const token = jwt.sign({ userId: user.id }, process.env.JWT_KEY);
-      res.send({ token });
-      res.status(200).json({ msg: "all ready" });
+      res.status(200).json({
+        userpic,
+        token,
+        msg: "all ready",
+      });
     }
 
     //catch connection

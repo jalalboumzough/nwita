@@ -1,4 +1,8 @@
-const { UserModule, NotesModule } = require("../Modules/DataModule");
+const {
+  UserModule,
+  NotesModule,
+  EmailModule,
+} = require("../Modules/DataModule");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -23,34 +27,41 @@ const jwtAthu = (req, res, next) => {
 //All users
 const AllUsers = async (req, res) => {
   try {
-    const Notes = await UserModule.find();
-    res.json(Notes);
+    const users = await UserModule.find();
+    res.json(users);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 //insert UserSingUp
-const SingUp = async (req, res) => {
+const SignUp = async (req, res) => {
   const { FullName, UserName, Email, Password, ProfilePicture } = req.body;
 
   // Validate input
-  if (!FullName || !UserName || !Email || !Password) {
+  if (!FullName || !UserName || !Email || !Password || !ProfilePicture) {
     return res
       .status(400)
       .json({ error: "UserName, Email, and Password are required" });
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(Password, 10);
-
     // Create a new user with the hashed password
     const newUser = await UserModule.create({
       FullName,
       UserName,
       Email,
-      Password: hashedPassword,
+      Password,
       ProfilePicture: ProfilePicture.data,
     });
+
+    res.status(201).json({ newUser });
+  } catch (error) {
+    // Handle errors
+    res.status(400).json({ error: error.message });
+  }
+  try {
+    // Create a new user with the hashed password
+
     res.status(201).json({ newUser });
   } catch (error) {
     // Handle errors
@@ -58,7 +69,7 @@ const SingUp = async (req, res) => {
   }
 };
 
-/* Ajouter des  notes controller */
+//Ajouter des  notes controller
 const Addnote = async (req, res) => {
   const NewNote = ({ NoteTitle, NoteObject, NoteContent, NoteBgColor } =
     req.body);
@@ -124,12 +135,21 @@ const UpdateProfile = async (req, res) => {
   } catch {}
 };
 
+const ShowEmails = async (req, res) => {
+  try {
+    const emails = await EmailModule.findOne({});
+    res.json(emails);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
 module.exports = {
-  SingUp,
+  SignUp,
   Addnote,
   AllNotes,
   GetUser,
   UpdateProfile,
   jwtAthu,
   AllUsers,
+  ShowEmails,
 };

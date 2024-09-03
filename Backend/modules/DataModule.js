@@ -58,10 +58,51 @@ const NoteSchema = new Schema({
   },
 });
 
+const EmailsSchema = new Schema({
+  UserName: {
+    type: String,
+    require: true,
+  },
+  Email: {
+    type: String,
+    require: true,
+  },
+  ProfilePicture: {
+    type: String,
+  },
+});
+
+const SharedNotesSchema = new Schema({
+  UserName: {
+    type: String,
+    required: true,
+  },
+  NoteTitle: {
+    type: String,
+    required: true,
+  },
+  NoteObject: {
+    type: String,
+    required: true,
+  },
+  NoteContent: {
+    type: String,
+    required: true,
+  },
+  ToUsers: {
+    type: Object,
+    require: true,
+  },
+});
+
 const UserModule = mongoose.model("User", UserSchema);
 const NotesModule = mongoose.model("Notes", NoteSchema);
+const EmailModule = mongoose.model("Emails", EmailsSchema);
+const SharedNoteModule = mongoose.model("SharedNotes", SharedNotesSchema);
 
 module.exports = {
   UserModule,
   NotesModule,
+  EmailModule,
+  SharedNoteModule,
 };

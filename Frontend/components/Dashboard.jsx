@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import add from "../src/img/add_post_btn.svg";
 import search from "../src/img/search_btn.svg";
 import Popup from "reactjs-popup";
-import Notification from "./Notification";
+import AllNotes from "./AllNotes";
 import NoteCard from "./NoteCard";
 import Profile from "./profile.jsx";
 
@@ -134,7 +134,7 @@ function Dashboard() {
       </div>
       <div className="display_content">
         {currComp === "home" ? (
-          <Notification />
+          <AllNotes />
         ) : currComp === "notif" ? (
           <NoteCard notes={filteredNotes} /> // Pass filtered notes to NoteCard
         ) : (

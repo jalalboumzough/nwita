@@ -40,6 +40,10 @@ UserSchema.pre("save", async function (next) {
 
 /* Define the Note Schema */
 const NoteSchema = new Schema({
+  UserID: {
+    type: String,
+    required: true,
+  },
   NoteTitle: {
     type: String,
     required: true,
@@ -55,6 +59,10 @@ const NoteSchema = new Schema({
   NoteBgColor: {
     type: String,
     required: true,
+  },
+  isPinned: {
+    type: Boolean,
+    default: false,
   },
 });
 

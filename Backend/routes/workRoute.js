@@ -6,21 +6,24 @@ const {
   Addnote,
   AllNotes,
   GetUser,
-  jwtAthu,
+  jwtAuth,
   UpdateProfile,
   AllUsers,
   ShowEmails,
+  updateNotePinState,
 } = require("../Controllers/Controller.js");
 const { login } = require("../Controllers/AthuController.js");
 
 router.post("/signup", SignUp);
 router.post("/login", login);
-router.post("/Addnote", Addnote);
+router.post("/Addnote", jwtAuth, Addnote);
 
-router.get("/AllNotes", AllNotes);
-router.get("/User", jwtAthu, GetUser);
+router.post("/AllNotes", jwtAuth, AllNotes);
+router.get("/User", jwtAuth, GetUser);
 router.post("/Users", AllUsers);
-router.post("/UpdateProfile", jwtAthu, UpdateProfile);
+router.post("/UpdateProfile", jwtAuth, UpdateProfile);
 router.post("/emails", ShowEmails);
+
+router.put("/updateNotePinState", updateNotePinState);
 
 module.exports = router;

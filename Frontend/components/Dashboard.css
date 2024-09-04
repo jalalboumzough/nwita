@@ -155,7 +155,7 @@
 }
 
 .popup-overlay {
-  background: rgba(119, 125, 3, 0.5); /* Optional: for a dimmed background */
+  background: rgba(239, 239, 239, 0.5); /* Optional: for a dimmed background */
 }
 
 .popup-content {
@@ -191,5 +191,3 @@ Notification Bar
   align-items: center;
   font-size: 16px;
 }
-
-

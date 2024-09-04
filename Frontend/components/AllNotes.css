@@ -9,7 +9,7 @@
 }
 
 .Note {
-  background-color: rgb(238, 238, 238);
+  background-color: rgb(204, 252, 204);
   width: 800px;
   height: auto;
   border-radius: 8px;
@@ -18,7 +18,6 @@
   flex-direction: column;
   border: 0.5px solid rgb(226, 226, 226);
   margin: 10px;
-  
 }
 
 .Note-header {
@@ -35,18 +34,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative; 
+  position: relative;
 }
 
-.Note-avatar img{
+.Note-avatar img {
   width: 90%;
   height: 90%;
   border-radius: 50%;
-  object-fit:cover;
+  object-fit: cover;
   image-rendering: auto;
-
 }
-
 
 .Note-title {
   flex-grow: 1;

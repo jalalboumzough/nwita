@@ -1,4 +1,4 @@
-/*Realise par sara */
+/* Réalisé par Sara */
 
 .note-card {
   width: 250px;
@@ -10,6 +10,28 @@
   border-radius: 8px;
   margin: 5px;
   overflow: hidden;
+}
+.notes-group {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.notes-date-header {
+  width: 100%;
+  align-content: center;
+  margin: 10px 9px;
+  height: auto;
+  font-size: medium;
+  font-weight: 400;
+}
+.StyleTime {
+  width: 30px;
+  height: 30px;
+  background-color: rgb(255, 253, 127);
+  border-radius: 10px;
+  float: left;
+  margin-right: 10px;
 }
 
 .note-title {

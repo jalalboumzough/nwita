@@ -9,8 +9,7 @@ const bcrypt = require("bcrypt");
 
 //JWT Verification
 
-const jwtAthu = (req, res, next) => {
-  console.log(req.body);
+const jwtAuth = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   if (!token) {
     return res.status(401).json({ error: "error " });
@@ -71,14 +70,15 @@ const SignUp = async (req, res) => {
 
 //Ajouter des  notes controller
 const Addnote = async (req, res) => {
+  const UserID = req.user.userId;
   const NewNote = ({ NoteTitle, NoteObject, NoteContent, NoteBgColor } =
     req.body);
-  console.log(req.body);
   if (!NoteTitle || !NoteObject || !NoteContent) {
     return res.status(400).json({ error: "The note is note adding " });
   }
   try {
     const NewNote = await NotesModule.create({
+      UserID,
       NoteTitle,
       NoteObject,
       NoteContent,
@@ -93,16 +93,23 @@ const Addnote = async (req, res) => {
 /*Recuper tous les notes */
 
 const AllNotes = async (req, res) => {
+  const UserID = req.user.userId;
+  console.log(UserID);
   try {
-    const Notes = await NotesModule.find();
-    res.json(Notes);
+    const notes = await NotesModule.find({
+      UserID,
+    }); // Adjust based on your actual method signature
+    if (!notes || notes.length === 0) {
+      return res.status(404).json({ message: "No notes found for this user" });
+    }
+    res.json(notes);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error(err); // Log the error for debugging
+    res.status(500).json({ message: "An error occurred while fetching notes" });
   }
 };
 
 /*Update User*/
-
 const GetUser = async (req, res) => {
   const userID = req.user.userId;
   try {
@@ -112,6 +119,7 @@ const GetUser = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
 const UpdateProfile = async (req, res) => {
   try {
     const { FullName, UserName, ProfilePicture } = req.body;
@@ -143,13 +151,37 @@ const ShowEmails = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// Update note pin state
+const updateNotePinState = async (req, res) => {
+  const { noteId, isPinned } = req.body;
+
+  try {
+    const updatedNote = await NotesModule.findByIdAndUpdate(
+      noteId,
+      { isPinned },
+      { new: true }
+    );
+
+    if (!updatedNote) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
+    res.json(updatedNote);
+  } catch (error) {
+    console.error("Error updating pin state:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   SignUp,
   Addnote,
   AllNotes,
   GetUser,
   UpdateProfile,
-  jwtAthu,
+  jwtAuth,
   AllUsers,
   ShowEmails,
+  updateNotePinState,
 };

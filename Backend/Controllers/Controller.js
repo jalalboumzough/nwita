@@ -7,8 +7,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-//JWT Verification
-
+//Middleware Function
+//Verification function with JWT
 const jwtAuth = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   if (!token) {
@@ -23,7 +23,7 @@ const jwtAuth = (req, res, next) => {
   next();
 };
 
-//All users
+//Function for fetch all user on the database, used for just verification data width POSTMAN App
 const AllUsers = async (req, res) => {
   try {
     const users = await UserModule.find();
@@ -32,7 +32,8 @@ const AllUsers = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
-//insert UserSingUp
+
+//SignUp Function for Create New account
 const SignUp = async (req, res) => {
   const { FullName, UserName, Email, Password, ProfilePicture } = req.body;
 

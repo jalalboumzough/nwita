@@ -29,7 +29,6 @@ const UserSchema = new Schema({
     type: String,
   },
 });
-
 // Hash the password before saving
 UserSchema.pre("save", async function (next) {
   if (this.isModified("Password") || this.isNew) {
@@ -38,7 +37,7 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-/* Define the Note Schema */
+// Define the Note Schema
 const NoteSchema = new Schema({
   UserID: {
     type: String,
@@ -79,25 +78,13 @@ const EmailsSchema = new Schema({
     type: String,
   },
 });
-
+//Sheared Notes DataModule, save the id of user and id of all note sheared with him developed by JALAL
 const SharedNotesSchema = new Schema({
-  UserName: {
+  UserID: {
     type: String,
     required: true,
   },
-  NoteTitle: {
-    type: String,
-    required: true,
-  },
-  NoteObject: {
-    type: String,
-    required: true,
-  },
-  NoteContent: {
-    type: String,
-    required: true,
-  },
-  ToUsers: {
+  NotesID: {
     type: Object,
     require: true,
   },
